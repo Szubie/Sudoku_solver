@@ -1,4 +1,7 @@
 import Sudoku_board
+import Sudoku_eliminationTest
+import Sudoku_view
+import Sudoku_validCheck
 
 #Game logic here. Might transfer it over into methods in the objects actually.
 
@@ -41,7 +44,7 @@ def createScenario1():
 
 
 createScenario1()  
-"""Scenario 1 is too hard right now. It involves more complex logic than process of elimination. Leave it for later."""
+"""Scenario 1 is too hard right now. It involves more complex logic than process of elimination. Leave it for later.""" #Can complete it now!!
 
 """Created a way to reset the value of the tiles. Can iterate through all the tiles and reset them when needed."""
 
@@ -94,6 +97,32 @@ def createScenario2():
     
 #createScenario2()
 
+def createScenario3():
+    Sudoku_board.a9.setValue(8)
+    Sudoku_board.b1.setValue(9)
+    Sudoku_board.b6.setValue(5)
+    Sudoku_board.b7.setValue(7)
+    Sudoku_board.c2.setValue(8)
+    Sudoku_board.c3.setValue(1)
+    Sudoku_board.c8.setValue(3)
+    Sudoku_board.d2.setValue(5)
+    Sudoku_board.d4.setValue(1)
+    Sudoku_board.d8.setValue(6)
+    Sudoku_board.e5.setValue(4)
+    Sudoku_board.e7.setValue(9)
+    Sudoku_board.f5.setValue(5)
+    Sudoku_board.f6.setValue(7)
+    Sudoku_board.g1.setValue(4)
+    Sudoku_board.g5.setValue(7)
+    Sudoku_board.g7.setValue(2)
+    Sudoku_board.h2.setValue(1)
+    Sudoku_board.h3.setValue(6)
+    Sudoku_board.h4.setValue(3)
+    Sudoku_board.i3.setValue(8)
+    
+#createScenario3()
+#We are no match for the so-called "World's hardest sudoku" though...can't even find one tile! Must follow more complex logic that hasn't been implemented.
+"""
 def validCheck():
     complete=False
     changeFlag=True        #If the program runs through the whole set and does nothing to change it, it will terminate. (It's stuck here).
@@ -156,6 +185,7 @@ def validCheck():
                               
 #        if isComplete():
         complete=True
+"""
 
 def isComplete():        
     for item in Sudoku_board.board.tileList():
@@ -170,11 +200,38 @@ def reset():
             things.resetValidValues()
         for things in Sudoku_board.board.tileList():
             things.resetInvalidValues()
-        
+    
   
+def main():
+    complete=False
+    while complete==False:
+        Sudoku_validCheck.validCheck(Sudoku_board.board.tileList())
+        for item in Sudoku_board.board.tileList():
+            if Sudoku_eliminationTest.elimination(item) !=-1:
+                item.setValue(Sudoku_eliminationTest.elimination(item))
+                Sudoku_validCheck.validCheck(Sudoku_eliminationTest.getAllNeighbourTiles(item)) #To update the valid and invalid tiles after a change has been made.
+        Sudoku_view.view()
+        if isComplete()==True:
+            complete=True
+            break
+        if continues()==False:
+            break
+
+def continues():
+    user=""
+    while user!="y" and user!="n":
+        user = raw_input("Continue? y/n: ")
+    if user=="n":
+        return False
+    else:
+        return True
+
+        
+
+"""
 def elimination():
-    """Works by a process of elimination, checking where values CAN'T be stored. If the value can't fit in any other tile within the square, or it can't fit in any other tile in the column, or it can't fit within any other tile on
-    the row, then it MUST go in this square."""
+    Works by a process of elimination, checking where values CAN'T be stored. If the value can't fit in any other tile within the square, or it can't fit in any other tile in the column, or it can't fit within any other tile on
+    the row, then it MUST go in this square
     
     #I need to create and store a list of these for each tile? Values that CAN'T be stored in that tile. Then, a tile will check all its valid values against its neighbours, to see if the value can't go anywhere else.
     print ""
@@ -238,23 +295,14 @@ def elimination():
     print ""
             
 def commonElements(list1, list2):
-    """Takes in two lists, returns the common elements between the two"""
+    Takes in two lists, returns the common elements between the two
     list3=[]
     for item in list1:
         if item in list2:
             list3.append(item)
     return list3
-    
-def view():
-    n=len(Sudoku_board.board.rowList())
-#    for num in range(n):
-#        Sudoku_board.board.rowList()[n-num-1].print_contents()
-    for num in range(n):
-        for item in Sudoku_board.board.rowList()[(n-1)-num].contains():
-            print repr(item.value()).rjust(2),   #Neat trick to remember
-        print ""
-        
-#Ok, but this prints the table upside down at the moment!
+"""    
+
                               
 
 """Now, going to add "valueExists" checker to columns, rows and squares"""
