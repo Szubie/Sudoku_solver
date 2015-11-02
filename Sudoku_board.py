@@ -108,15 +108,15 @@ class Tiles(object):
     def __init__(self, Name, VLine, HLine, Square, Value=-1):
         self.Name=Name
         self.VLine=VLine
-        self.HLine=HLine                        #Don't reuse the same parameter names within the constructor?
+        self.HLine=HLine                        
         self.Square=Square
         self.Value=Value
         self.ValidValues=[]
         self.InvalidValues=[]
     
-    def name(self):                             #Indentation error was causing self to be undefined? init wasn't being run first?
+    def name(self):                             
         return self.Name
-    def value(self):                            #Don't reuse the same names for methods as those that exist in the field?
+    def value(self):                            
         return self.Value
     def setValue(self,x):
         self.Value=x
@@ -186,8 +186,6 @@ class TilesList(object):
     def contains(self):
         return self.List
     def print_contents(self):
-#        for item in self.List:
-#           print item.name()
         for item in range(0, len(self.List)-1):
             print self.List[item].name()+",",
         print self.List[-1].name()+"."
@@ -334,16 +332,3 @@ SquareList=SquaresList(sq1, sq2, sq3, sq4, sq5, sq6, sq7, sq8, sq9)
 #1 board (9x9 square).
 
 board=Board(ColList, RowList, SquareList, TileList)
-
-
-#for n in range(3):
-#    print "Hello world!"
-
-"""Things we learned, to remember:
--Careful of re-using the same names. You can use the same name for a field in a class and a method within that class.
--Additionally, remember you need to reference self as a parameter when you create a method in a class.
--You must also specify that a class is an (Object), or whatever subclass you want it to be.
-
--Consider, could there be a better way of implementing OOP here? So many arguments, takes a huge amount of time to create this stuff.
--You are also doing an awful lot of copying and pasting here. Perhaps you could have avoided this by using inheritance, granting all sub-classes access to the same functions? 
--Always think and plan carefully first. If you feel like there must be a better way to do something, there probably is one."""
