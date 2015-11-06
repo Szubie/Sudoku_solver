@@ -1,7 +1,10 @@
 import Sudoku_board
 
 def validChecker(tileList):
-    """Takes as input a list of tiles to check. Updates all the valid and invalid values for these items."""
+    """Takes as input a list of tiles to check. Updates all the valid and invalid values for these items.
+    NEW: returns a list of the currently unassigned tiles."""
+    unassigned_tiles=[]
+    
     for item in tileList:
         col=Sudoku_board.board.columnList()[item.col()-1]
         row=Sudoku_board.board.rowList()[item.row()-1]
@@ -11,6 +14,7 @@ def validChecker(tileList):
             item.setAllInvalid()
             
         if item.value()==-1:
+            unassigned_tiles.append(item)
             for n in range(1,10):
                 if (col.valueExists(n) or row.valueExists(n) or square.valueExists(n)): 
                     if n not in item.invalidValues():
@@ -18,7 +22,7 @@ def validChecker(tileList):
                 else:
                     if n not in item.validValues():
                         item.addValidValue(n)
-    return 
+    return unassigned_tiles
 
 
 

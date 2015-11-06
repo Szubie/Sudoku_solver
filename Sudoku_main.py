@@ -2,8 +2,9 @@ import Sudoku_board
 import Sudoku_solver
 import Sudoku_scenario
 import Sudoku_validCheck
-import Sudoku_recursive2 
+import Sudoku_view
 import timeit
+import cProfile
 
 
 def isComplete():        
@@ -32,24 +33,23 @@ def main():
     Continue=True
     while Continue==True:
         reset()
-        scen=Sudoku_scenario.createScenario()
-        if scen==3:
-            start_time = timeit.default_timer()
-            Sudoku_validCheck.validChecker(Sudoku_board.board.tileList())
-            Sudoku_solver.solveSudoku(Sudoku_board.board.tileList())
-            elapsed = timeit.default_timer() - start_time
-            print elapsed
-        else:
-            start_time = timeit.default_timer()
-            Sudoku_recursive2.solveSudoku(Sudoku_board.board.tileList())
-            elapsed = timeit.default_timer() - start_time
-            print elapsed
+        Sudoku_scenario.createScenario()
+        Sudoku_view.view()
+        print 
+        start_time = timeit.default_timer()
+        unassignedTiles=Sudoku_validCheck.validChecker(Sudoku_board.board.tileList())
+        Sudoku_solver.solveSudoku(unassignedTiles)
+        elapsed = timeit.default_timer() - start_time
+        print elapsed
+
         Continue=continues()
         
     print "Thanks for playing!"
     return 
     
-    
+ 
+
+#cProfile.run('main2()')   
 main()
 
 

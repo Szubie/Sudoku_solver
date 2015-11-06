@@ -8,11 +8,11 @@ import Sudoku_view
 def findUnassignedLocation(tileList):
     """This function finds an entry in grid that is still unassigned. 
         Returns Boolean false if it can't find an unassigned item. Otherwise, returns item."""
-    for item in Sudoku_board.board.tileList():
-        if item.value()==-1:
-            return item
-    else:
-        return False
+    myTileList=tileList[:]
+    try:
+        return (myTileList.pop(0), myTileList)
+    except:
+        return (False, False)
     
 def isValid(tile, num):
     """Checks whether it will be legal to assign num to the given tile. 
@@ -27,17 +27,15 @@ def isValid(tile, num):
         return False
 
 
-
-#Sudoku_validCheck.validChecker(Sudoku_board.board.tileList())
-
 def solveSudoku(tileList):
     """ Takes a partially filled-in grid and attempts to assign values to
     all unassigned locations in such a way to meet the requirements
     for Sudoku solution (non-duplication across rows, columns, and boxes) """
-    index=findUnassignedLocation(tileList)
+    unassigned_tiles=findUnassignedLocation(tileList)[1]
+    index=findUnassignedLocation(tileList)[0]
  
     # If there is no unassigned location, we are done
-    if (findUnassignedLocation(tileList)==False):
+    if (unassigned_tiles==False):
        Sudoku_view.view()
        return True # success!
  
@@ -45,7 +43,7 @@ def solveSudoku(tileList):
     for num in index.validValues():
         if (isValid(index,num)):
             index.setValue(num)
-            if solveSudoku(tileList):
+            if solveSudoku(unassigned_tiles):
                 return True
             index.setValue(-1)
     return False # this triggers backtracking
