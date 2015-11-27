@@ -2,9 +2,6 @@ import timeit
 
 board=[]
 
-#def sizeOfBoard():
-#    n=raw_input("How big should the board be? \n")
-    
 for x_axis in range(9):
     board.append([])
     
@@ -66,7 +63,6 @@ def solveSudoku(board):
  
     # If there is no unassigned location, we are done
     if (index==False):
-#       Sudoku_view.view()
        return True # success!
  
     # consider valid digits
@@ -207,21 +203,3 @@ def main():
     view()
     
 main()
-
-"""
-print elapsed
-    
-createScenario3()
-view()
-print
-
-start_time = timeit.default_timer()
-solveSudoku(board)
-elapsed = timeit.default_timer() - start_time
-print elapsed
-
-print
-view()
-"""
-
-#Interesting. If left without any board assignemnts, this algorithm will generate a sudoku puzzle. Not sure if it has a unique solution, however, which is a characteristic of a true sudoku puzzle.
